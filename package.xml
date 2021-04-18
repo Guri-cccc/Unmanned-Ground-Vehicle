@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>STUDY1</name>
+  <version>1.12.0</version>
+  <description>The STUDY1 package</description>
+  <maintainer email="lee.dk@kaist.ac.kr">h_ohta</maintainer>
+  <license>BSD</license>
+
+  <!-- <buildtool_depend>autoware_build_flags</buildtool_depend> -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+  
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>ackermann_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>hellocm_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>tf2</build_depend>
+  <build_depend>autoware_msgs</build_depend>
+  <!-- <build_depend>Eigen3</build_depend> -->
+
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>sensor_msgs</build_export_depend>
+  <build_export_depend>ackermann_msgs</build_export_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>hellocm_msgs</build_export_depend>
+  <build_export_depend>tf</build_export_depend>
+  <build_export_depend>tf2</build_export_depend>
+  <build_export_depend>autoware_msgs</build_export_depend>
+  <!-- <build_export_depend>Eigen3</build_export_depend> -->
+
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>ackermann_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>hellocm_msgs</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>tf2</exec_depend>
+  <exec_depend>autoware_msgs</exec_depend>
+  <!-- <exec_depend>Eigen3</exec_depend> -->
+
+</package>

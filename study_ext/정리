@@ -1,0 +1,39 @@
+0. UDP_to_carmaker
+
+1. joy_control
+	: 조이스틱 맵핑 + 커맨드 토픽 생성
+	input: "/joy"(sensor_msgs/Joy)
+	output: "/Ackermann/command/joy" (ackermann_msgs/AckermannDriveStamped) :조이스틱 커맨드
+		"/Joy/command/reverse" (Bool) :후진기어
+
+2. LatLong2UTM ** yaw 값 이전으로 변경 (USB) **
+	: GPS정보를 UTM 좌표계로 변환
+	input:	"/carmaker/imu/data"(sensor_msgs/Imu)	:Imu센서
+		"/gps_out"(hellocm_msgs/GPS_Out)	:GPS센서
+	output:	"/UTM_raw"(geometry_msgs/Pose2D)	:UTM raw 좌표
+		"/UTM_raw_viz"(nav_msgs/Odometry)	:visualization
+
+3. EKF
+	: UTM raw를 EKF필터로 보정
+	input:	"/utm_local"(geometry_msgs/Pose2D)	:UTM raw 좌표
+		"/Odometry/system"(nav_msgs/Odometry)	:시스템의 속도
+	output:	"/EKF/utm_local"(nav_msgs/Odometry)	:EKF필터링된 UTM좌표
+
+4. waypoint_saver
+	: EKF 
+	input:	"/carmaker/imu/data"(sensor_msgs/Imu)	:Imu센서
+		"/EKF/utm_local"(nav_msgs/Odometry)	:EKF필터링된 UTM좌표
+	output:	"/UTM_EKF_viz"(nav_msgs/Odometry)	:visualization
+		Waypoint .csv파일
+
+5. waypoint_loader
+	: 저장된 waypoint들을 불러와서 LaneArray로 publish
+	input:	Waypoint .csv파일
+	output:	"/waypoint_lane"(autoware_msgs::LaneArray)	:waypoint
+
+6. waypoint_tracker
+	: 불러온 LaneArray에 현재로 부터 가장 가까운 waypoint를 찾고, 그로부터 50개 떨어진 waypoint들을 바디 좌표계로 변환해서 publish
+	input:	"/waypoint_lane"(autoware_msgs::LaneArray):EKF필터링된 현재 UTM좌표
+		"/carmaker/imu/data"(sensor_msgs::Imu)	:IMU센서
+		"/EKF/utm_local"(nav_msgs::Odometry)	:글로벌좌표계의 목표점들 (50개)
+	output:	"/body_frame/waypoints"(nav_msgs::Path)	:바디좌표계의 목표점들 (50개)
